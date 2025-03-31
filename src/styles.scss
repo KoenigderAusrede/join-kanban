@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  h1, h2, h3 {
+    font-weight: 700; /* Fett für Überschriften */
+  }
+  
+  button {
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .cdk-drag-preview {
+    z-index: 1000 !important;
+    pointer-events: none;
+  }
+  
+ .cdk-drag-placeholder {
+  opacity: 0.3;
+  border: 2px dashed #ccc;
+  background: #f9f9f9;
+}
+  
+  .cdk-drag {
+    cursor: grabbing;
+  }
+  

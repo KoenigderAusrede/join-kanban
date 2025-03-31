@@ -1,0 +1,87 @@
+// src/styles/mixins.scss
+
+@use 'variables' as *;
+
+// 👉 Flexbox Helper
+@mixin flex-between($align: center) {
+    display: flex;
+    justify-content: space-between;
+    align-items: $align;
+  }
+  
+  @mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  // 👉 Button Styles
+  @mixin button($bg-color, $text-color: white) {
+    background-color: $bg-color;
+    color: $text-color;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  // 👉 Circle-Elemente
+  @mixin circle($size, $bg-color: #2A6FF4, $text-color: white) {
+    width: $size;
+    height: $size;
+    background: $bg-color;
+    color: $text-color;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  // 👉 Progress Bar
+  @mixin progress-bar($bg: #f0f0f0, $fill: #2A6FF4) {
+    background-color: $bg;
+    border-radius: 3px;
+  
+    .progress-bar {
+      height: 100%;
+      background-color: $fill;
+      border-radius: 3px;
+    }
+  }
+  
+  // 👉 Shadow Preset
+  @mixin soft-shadow {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  @mixin strong-shadow {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  // 👉 Text Ellipsis
+  @mixin text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // 🧩 Einheitliches Icon-Styling (z. B. Prio-Icons)
+@mixin icon($size: $icon-size-md) {
+  width: $size;
+  height: $size;
+  object-fit: contain;
+  aspect-ratio: 1 / 1;
+  display: inline-block;
+}
+  
+@mixin category-badge {
+  display: inline-block;
+  padding: $spacing-md;
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $color-white;
+  border-radius: $radius-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

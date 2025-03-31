@@ -1,0 +1,123 @@
+@use 'mixins' as *;
+@use 'variables' as *;
+
+.summary-container {
+  width: 70%;
+  margin: 0 auto;
+
+  @media screen and (max-width: 1023px) {
+    width: 100%;
+    padding: 16px;
+  }
+}
+
+.summaryHeader {
+  text-align: center;
+  margin: 5rem 0;
+  font-size: xx-large;
+
+  span {
+    color: $color-primary;
+  }
+
+  @media screen and (max-width: 1023px) {
+    margin: 1rem 0;
+  }
+}
+
+.summary-card {
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  box-shadow: $shadow-soft;
+  transition: all $transition-normal;
+  cursor: pointer;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  &.center {
+    align-items: center;
+  }
+
+  &:hover {
+    border-top-left-radius: 0;
+  }
+
+  .counterIMG {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    img {
+      border: 3px solid $color-white;
+      border-radius: 50%;
+    }
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.2;
+    white-space: pre-line;
+  }
+}
+
+.card--urgent {
+  background-color: $color-primary;
+  color: $color-white;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-lg;
+
+  &:hover {
+    background-color: $color-white;
+    color: $color-primary;
+
+    .divider {
+      background-color: $color-primary;
+    }
+  }
+
+  .urgent-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    text-align: center;
+  }
+
+  .urgent-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex: 2;
+    gap: 4px;
+    text-align: left;
+
+    .label {
+      font-size: $font-size-sm;
+      opacity: 0.8;
+    }
+
+    .date {
+      font-weight: bold;
+      font-size: $font-size-lg;
+    }
+
+    .countdown {
+      font-size: $font-size-sm;
+      opacity: 0.9;
+    }
+  }
+
+  .divider {
+    width: 2px;
+    height: 80%;
+    background-color: $color-white;
+    transition: background-color $transition-fast;
+    margin: 0 $spacing-md;
+  }
+}

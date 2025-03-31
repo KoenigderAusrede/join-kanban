@@ -1,0 +1,139 @@
+<div [ngClass]="layoutMode === 'overlay' ? 'add-task-overlay' : 'add-task-page'"
+    [class.open]="layoutMode === 'overlay' && isAddTaskOpen">
+    <div *ngIf="layoutMode === 'overlay'" class="close-btn" (click)="closeTaskDialog()"></div>
+
+    <h2>{{ isEditMode ? 'Edit Task' : 'Add a new Task' }}</h2>
+
+    <form [formGroup]="taskForm" (ngSubmit)="submitTask()">
+        <input type="text" formControlName="title" placeholder="Enter a title" required>
+
+        <label>Description</label>
+        <textarea formControlName="description" placeholder="Enter a Description"></textarea>
+
+        <label for="status">Status</label>
+        <select formControlName="status">
+            <option value="todo">To Do</option>
+            <option value="inProgress">In Progress</option>
+            <option value="awaitFeedback">Await Feedback</option>
+            <option value="done">Done</option>
+        </select>
+
+        <label>Due date</label>
+        <input type="date" formControlName="dueDate">
+
+        <label>Priority</label>
+        <div class="priority-buttons">
+            <button type="button" class="urgent" [class.active]="taskForm.value.priority === 'Urgent'"
+                (click)="setPriority('Urgent')">
+                Urgent <img src="assets/prio/prioUrgent.png" alt="Urgent">
+            </button>
+
+            <button type="button" class="medium" [class.active]="taskForm.value.priority === 'Medium'"
+                (click)="setPriority('Medium')">
+                Medium <img src="assets/prio/prioMedium.png" alt="Medium">
+            </button>
+
+            <button type="button" class="low" [class.active]="taskForm.value.priority === 'Low'"
+                (click)="setPriority('Low')">
+                Low <img src="assets/prio/prioLow.svg" alt="Low">
+            </button>
+        </div>
+
+        <label>Assigned to</label>
+        <div class="assigned-header" (click)="toggleDropdown()">
+            <span>Select Contacts to assign</span>
+            <img [class.rotated]="isDropdownOpen" src="assets/arrows/arrow-down-line.svg" alt="Arrow down">
+        </div>
+        <div class="contact-dropdown" *ngIf="isDropdownOpen">
+            <div class="contact-list">
+                <div *ngFor="let contact of (contacts$ | async)" class="contact-item"
+                    [class.selected]="isSelected(contact)" (click)="toggleSelection(contact)">
+
+                    <div class="contact-initials" [style.backgroundColor]="getColor(contact)">
+                        {{ getInitials(contact) }}
+                    </div>
+                    <span class="contact-name">{{ contact.firstName }} {{ contact.lastName }}</span>
+                    <img *ngIf="isSelected(contact)" src="assets/checkbox/checkmark-checked.svg"
+                        class="contact-checkbox">
+                    <img *ngIf="!isSelected(contact)" src="assets/checkbox/checkmark.svg" class="contact-checkbox">
+                </div>
+            </div>
+
+            <!-- Add New Contact Button -->
+            <div class="add-contact-btn">
+                Add new contact <img src="assets/icons/addContact_white.svg" alt="Add new contact">
+            </div>
+        </div>
+        <div class="assigned-contacts">
+            <div
+              class="initials-circle"
+              *ngFor="let contact of selectedContacts"
+              [style.background]="contact.color"
+              [title]="contact.firstName + ' ' + contact.lastName"
+            >
+              {{ contact.initials }}
+            </div>
+          </div>
+
+        <label>Category</label>
+        <select formControlName="category">
+            <option *ngFor="let category of categories">{{ category }}</option>
+        </select>
+
+        <label>Subtasks</label>
+
+        <!-- Standard-Ansicht: Klick auf die Zeile oder das "+" öffnet das Eingabefeld -->
+        <div class="subtask-input" (click)="startAddingSubtask()" *ngIf="!isAddingSubtask">
+            <span class="placeholder">Add new subtask</span>
+            <img src="assets/buttons/blueplus.svg" (click)="startAddingSubtask(); $event.stopPropagation()">
+        </div>
+
+        <!-- Eingabe-Modus: Eingabefeld mit "Check" | "X" Icons -->
+        <div class="subtask-edit" *ngIf="isAddingSubtask">
+            <input type="text" formControlName="subtaskInput" placeholder="Enter subtask">
+            <img src="assets/buttons/blueX.svg" (click)="cancelSubtask()">
+            <img src="assets/buttons/bluecheck.svg" (click)="saveSubtask()">
+        </div>
+        <!-- Liste der gespeicherten Subtasks -->
+        <div formArrayName="subtasks">
+        <ul>
+            <li *ngFor="let subtask of subtasks.controls; let i = index" class="subtask-item"
+                (mouseenter)="hoveredIndex = i" (mouseleave)="hoveredIndex = null">
+
+                <!-- Normale Ansicht -->
+                <div *ngIf="editingIndex !== i" class="subtask-content">
+                    • {{ subtask.value }}
+
+                    <!-- Icons erst bei Hover anzeigen -->
+                    <div class="subtask-icons" *ngIf="hoveredIndex === i">
+                        <img src="assets/buttons/blueedit.svg" class="edit-icon" (click)="editSubtask(i)">
+                        <img src="assets/buttons/trash.svg" class="delete-icon"
+                            (click)="removeSubtask(i); $event.stopPropagation()">
+                    </div>
+                </div>
+
+                <!-- Bearbeitungsmodus -->
+                <div *ngIf="editingIndex === i" class="subtask-edit">
+                    <input type="text" [formControlName]="i" (keyup.enter)="saveEditedSubtask(i)">
+                    <img src="assets/buttons/bluecheck.svg" (click)="saveEditedSubtask(i)">
+                    <img src="assets/buttons/blueX.svg" (click)="cancelEditSubtask()">
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="button-group">
+        <button type="submit" class="create-task-btn">
+            {{ isEditMode ? 'Save ✔' : 'Create Task ✔' }}
+          </button>
+          <button class="cancel-btn" type="button" (click)="resetFormAndClose()">x Cancel</button>
+    </div>
+    </form>
+
+    <!-- Success-Overlay -->
+<div class="success-overlay" *ngIf="showSuccessBanner">
+    <div class="success-banner">
+     <img src="assets/icons/board-icon-white.png" alt="" style="height: 20px; width: 20px;">
+     <p>Task successfully {{ isEditMode ? 'updated' : 'created' }}</p> 
+    </div>
+  </div>  
+</div>

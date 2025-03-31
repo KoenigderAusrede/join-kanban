@@ -1,0 +1,95 @@
+<div class="dashboard board-scrollable">
+    <!-- 🔍 Suchleiste -->
+    <div class="task-header">
+      <input type="text" class="task-search" placeholder="Find Task" [(ngModel)]="searchQuery" />
+      <button class="add-task-btn" (click)="openAddTask()">Add Task +</button>
+    </div>
+  
+    <app-add-task
+      layoutMode="overlay"
+      *ngIf="isAddTaskOpen"
+      (closeDialog)="closeAddTask()"
+      (taskCreated)="addTaskToBoard($event)"
+    ></app-add-task>
+  
+    <!-- 📝 Task-Kategorien -->
+    <div class="task-container">
+      <div *ngFor="let category of categories" class="task-category-wrapper">
+        <div
+          cdkDropList
+          [id]="category"
+          class="task-category"
+          (cdkDropListDropped)="drop($event, category)"
+          [cdkDropListConnectedTo]="getConnectedDropLists(category)"
+        >
+          <!-- Header -->
+          <div class="category-header">
+            <h2>{{ getCategoryTitle(category) }}</h2>
+            <button class="add-task-icon" (click)="openAddTask()"></button>
+          </div>
+  
+          <!-- Tasks oder Placeholder -->
+          <ng-container *ngIf="filterTasks(category).length > 0; else placeholder">
+            <div
+            *ngFor="let task of filterTasks(category); trackBy: trackByTaskId"
+          
+              class="task-card"
+              cdkDrag
+              (click)="openTaskDetail(task)"
+              (cdkDragEnded)="onMouseUp()"
+              (cdkDragMoved)="onDragMoved($event)"
+            >
+              <div class="task-category-label" [ngStyle]="{ 'background-color': getCategoryColor(task.category) }">
+                {{ task.category || 'Keine Kategorie' }}
+              </div>
+              <div class="task-title">
+                <strong class="task-title-text">{{ task.title || 'Kein Titel' }}</strong>
+              </div>
+              <div class="task-description">
+                {{ task.description || 'Keine Beschreibung' }}
+              </div>
+              <div class="task-subtasks">
+                <div class="progress-bar-container">
+                  <div class="progress-bar" [style.width.%]="getSubtaskProgress(task)"></div>
+                </div>
+                <span class="subtask-info">
+                  {{ getCompletedSubtasks(task) }} / {{ task.subtasks.length || 0 }} Subtasks
+                </span>
+              </div>
+              <div class="task-assignees">
+                <div
+                  *ngFor="let contact of normalizeAssignees(task)"
+                  class="user-initials"
+                  [ngStyle]="{ 'background-color': contact.color }"
+                >
+                  {{ contact.initials }}
+                </div>
+              </div>
+              <div class="task-priority">
+                <img *ngIf="task.priority === 'Urgent'" src="assets/prio/prioUrgent.png" alt="Urgent" />
+                <img *ngIf="task.priority === 'Medium'" src="assets/prio/prioMedium.png" alt="Medium" />
+                <img *ngIf="task.priority === 'Low'" src="assets/prio/prioLow.svg" alt="Low" />
+              </div>
+            </div>
+          </ng-container>
+  
+          <ng-template #placeholder>
+            <div class="task-placeholder">
+              <span *ngIf="searchQuery">No matching tasks found.</span>
+              <span *ngIf="!searchQuery">No tasks in this category yet.</span>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Task Detail Overlay -->
+    <app-task-detail
+      *ngIf="selectedTask"
+      [task]="selectedTask"
+      [contacts]="contacts"
+      (close)="closeTaskDetail()"
+      (edit)="startEditTask($event)"
+    ></app-task-detail>
+  </div>
+  

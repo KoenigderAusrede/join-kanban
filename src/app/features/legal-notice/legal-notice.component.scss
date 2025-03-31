@@ -1,0 +1,35 @@
+.legal-page {
+    max-width: 800px;
+    margin: 64px auto;
+    padding: 0 24px;
+    line-height: 1.6;
+    font-size: 16px;
+    color: #333;
+  
+    h1 {
+      font-size: 32px;
+      color: #2a6ff4;
+      margin-bottom: 24px;
+    }
+  
+    h2 {
+      font-size: 22px;
+      margin-top: 32px;
+    }
+  
+    a {
+      color: #2a6ff4;
+      text-decoration: none;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  
+    .source {
+      margin-top: 40px;
+      font-size: 14px;
+      opacity: 0.6;
+    }
+  }
+  

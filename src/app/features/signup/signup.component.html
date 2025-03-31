@@ -1,0 +1,32 @@
+<app-intro-overlay *ngIf="showIntro" (animationDone)="showIntro = false" />
+<header class="signup-header">
+    <img class="join-logo-blue" src="assets/logo/joinLogoBlue.svg" alt="Join Logo">
+    <div class="login-link">
+        <p>Already have an account?</p>
+        <a routerLink="/login">Log in</a>
+    </div>
+</header>
+
+<main class="signup-container">
+    <h1>Sign Up</h1>
+
+    <form #signupForm="ngForm" (ngSubmit)="onSignup()">
+        <div class="input-fields">
+            <div class="input-field">
+                <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="Email" required>
+                <img src="assets/img/mail.svg" alt="Email Icon">
+            </div>
+      
+            <div class="input-field">
+                <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="Password" required>
+                <img src="assets/img/lock.png" alt="Password Icon">
+            </div>
+        </div>
+        <button type="submit">Sign Up</button>
+    </form>
+</main>
+
+<footer class="legal">
+    <a routerLink="/privacy-policy">Privacy Policy</a>
+    <a routerLink="/legal-notice">Legal Notice</a>
+</footer>

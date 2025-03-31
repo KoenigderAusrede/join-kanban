@@ -1,0 +1,234 @@
+<div class="contacts-wrapper static">
+    <!-- Liste -->
+    <div class="p-2 max-w-xl mx-auto">
+        <h2 class="text-2xl font-bold mb-6">Contacts</h2>
+
+        <div *ngFor="let contact of contacts"
+            class="bg-white rounded-xl shadow p-4 mb-4 flex items-center justify-between hover:bg-gray-100 transition cursor-pointer"
+            (click)="selectContact(contact)">
+            <div class="flex items-center gap-4">
+                <div
+                class="w-12 h-12 rounded-full text-white flex items-center justify-center font-bold text-lg"
+                [ngStyle]="{ 'background-color': contact.color || '#4589FF' }"
+              >
+                {{ contact.initials }}
+              </div>
+                <div>
+                    <div class="font-medium">{{ contact.firstName }} {{ contact.lastName }}</div>
+                    <div class="text-sm text-gray-500">{{ contact.email }}</div>
+                </div>
+            </div>
+
+            <img src="assets/arrows/arrow-right-line.png" alt="Details" class="w-5 h-5 opacity-50" />
+        </div>
+    </div>
+
+
+    <!-- Detailansicht -->
+    <div *ngIf="selectedContact as contact" class="fixed inset-0 z-50 bg-white p-6 pt-24 pb-28 overflow-y-auto lg:static lg:p-0 lg:bg-transparent lg:z-auto"
+    >
+        <!-- Top: Initialen + Name + Close Icon -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full text-white font-bold text-lg flex items-center justify-center"
+                 [ngStyle]="{ 'background-color': getColorForContact(contact) }">
+              {{ contact.firstName[0] }}{{ contact.lastName[0] }}
+            </div>
+            <h2 class="text-xl font-bold">
+              {{ contact.firstName }} {{ contact.lastName }}
+            </h2>
+          </div>
+          <button (click)="selectedContact = null">
+            <img src="assets/arrows/arrow-left-line.svg" class="w-6 h-6">
+          </button>
+        </div>
+      
+        <!-- Middle: Contact Info -->
+        <div class="space-y-2">
+          <p><span class="font-semibold">Email:</span> {{ contact.email }}</p>
+          <p><span class="font-semibold">Phone:</span> {{ contact.phone }}</p>
+        </div>
+      
+        <!-- Bottom: Buttons -->
+        <div class="flex justify-between pt-4">
+          <button class="edit-btn" (click)="openEditOverlay()">
+            <img src="assets/buttons/edit-white.svg" alt=""> Edit
+          </button>
+          <button class="delete-btn" (click)="deleteContact()">
+            <img src="assets/buttons/delete-gray.svg" alt=""> Delete
+          </button>
+        </div>
+      </div>
+      
+
+</div>
+<button
+  class="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-blue-500 text-white text-2xl shadow-lg hover:bg-blue-600 transition-all lg:bottom-6 z-40"
+  (click)="openOverlay()"
+>
+  ＋
+</button>
+
+<!-- Add Contact Overlay -->
+<div
+  *ngIf="isOverlayOpen"
+  class="fixed inset-0 z-[9999] flex justify-center lg:justify-end items-start bg-black bg-opacity-30 backdrop-blur-sm"
+>
+  <div
+    class="w-full h-full max-w-md bg-white lg:rounded-l-2xl shadow-xl flex flex-col overflow-y-auto pt-[80px] lg:pt-0"
+  >
+    <!-- Header -->
+    <div class="bg-primary text-white px-6 py-4 flex items-center justify-between">
+      <div>
+        <img src="assets/logo/joinLogoWhite.svg" alt="Logo" class="h-6 mb-1" />
+        <h2 class="text-xl font-bold">Add Contact</h2>
+        <p class="text-sm font-light">Tasks are better with a team!</p>
+      </div>
+      <button
+        type="button"
+        class="text-white text-2xl hover:text-gray-200"
+        (click)="closeOverlay()"
+      >
+        ×
+      </button>
+    </div>
+
+    <!-- Inputs -->
+    <div class="p-6 space-y-4 flex-1">
+      <div>
+        <input
+          type="text"
+          placeholder="First Name"
+          [(ngModel)]="newContact.firstName"
+          class="w-full border-b border-gray-300 focus:outline-none py-2"
+        />
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Last Name"
+          [(ngModel)]="newContact.lastName"
+          class="w-full border-b border-gray-300 focus:outline-none py-2"
+        />
+      </div>
+
+      <div>
+        <input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="newContact.email"
+          class="w-full border-b border-gray-300 focus:outline-none py-2"
+        />
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Phone"
+          [(ngModel)]="newContact.phone"
+          class="w-full border-b border-gray-300 focus:outline-none py-2"
+        />
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between px-6 pb-6">
+      <button
+        (click)="addContact()"
+        class="bg-primary text-white px-6 py-2 rounded hover:bg-blue-600"
+      >
+        Create Contact ✓
+      </button>
+      <button
+        (click)="closeOverlay()"
+        class="border border-gray-400 text-gray-600 px-6 py-2 rounded hover:bg-gray-100"
+      >
+        Cancel ×
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Overlay Wrapper -->
+<div
+  class="fixed inset-0 z-[9999] bg-black bg-opacity-30 backdrop-blur-sm flex justify-center lg:justify-start items-start"
+  [class.hidden]="!isEditOverlayOpen"
+>
+  <!-- Slide-In Panel -->
+  <div
+    class="w-full h-full max-w-md bg-white lg:rounded-r-2xl shadow-xl flex flex-col overflow-y-auto pt-[80px] lg:pt-0
+           transform transition-transform duration-500 -translate-x-0"
+    [class.translate-x-0]="isEditOverlayOpen"
+  >
+    <!-- Header -->
+    <div class="bg-primary text-white px-6 py-4 flex items-center justify-between">
+      <div>
+        <img src="./../../../assets/logo/joinLogoWhite.svg" alt="Logo" class="h-6 mb-1" />
+        <h2 class="text-xl font-bold">Edit Contact</h2>
+      </div>
+      <button
+        type="button"
+        class="text-white text-2xl hover:text-gray-200"
+        (click)="closeEditOverlay()"
+      >
+        ×
+      </button>
+    </div>
+
+    <!-- Inputs -->
+    <div class="p-6 space-y-4 flex-1">
+      <div>
+        <input
+          type="text"
+          placeholder="First Name"
+          [(ngModel)]="editableContact.firstName"
+          class="w-full border-b border-gray-300 focus:outline-none py-2"
+        />
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Last Name"
+          [(ngModel)]="editableContact.lastName"
+          class="w-full border-b border-gray-300 focus:outline-none py-2"
+        />
+      </div>
+
+      <div>
+        <input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="editableContact.email"
+          class="w-full border-b border-gray-300 focus:outline-none py-2"
+        />
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Phone"
+          [(ngModel)]="editableContact.phone"
+          class="w-full border-b border-gray-300 focus:outline-none py-2"
+        />
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-between px-6 pb-6">
+      <button
+        (click)="saveContact()"
+        class="bg-primary text-white px-6 py-2 rounded hover:bg-blue-600"
+      >
+        Save ✓
+      </button>
+      <button
+        (click)="closeEditOverlay()"
+        class="border border-gray-400 text-gray-600 px-6 py-2 rounded hover:bg-gray-100"
+      >
+        Cancel ×
+      </button>
+    </div>
+  </div>
+</div>

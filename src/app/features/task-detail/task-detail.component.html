@@ -1,0 +1,61 @@
+<div class="task-detail-overlay" *ngIf="task" [class.open]="true">
+    <button class="close-btn" (click)="closeDetail()"></button>
+  
+    <!-- Category -->
+    <div class="task-category"
+    [ngStyle]="{ 'background-color': getCategoryColor(task.category || '') }">
+ {{ task.category }}
+</div>
+  
+    <!-- Title -->
+    <h1>{{ task.title }}</h1>
+  
+    <!-- Description -->
+    <p class="task-description">{{ task.description }}</p>
+  
+    <!-- Due Date -->
+    <div class="task-info">
+      <strong>Due date:</strong> {{ task.dueDate }}
+    </div>
+  
+    <!-- Priority -->
+    <div class="task-info">
+      <strong>Priority:</strong> {{ task.priority }}
+      <img [src]="getPriorityIcon(task.priority)" class="priority-icon">
+    </div>
+  
+    <!-- Assigned To -->
+    <div class="task-info">
+      <strong>Assigned To:</strong>
+      <div class="task-assignees">
+        <div *ngFor="let contact of task.assignedTo" class="user-initials"
+     [ngStyle]="{'background-color': contact.color}">
+  {{ contact.initials }}
+</div>
+
+     
+      </div>
+    </div>
+  
+    <!-- Subtasks -->
+    <div class="task-info">
+      <strong>Subtasks:</strong>
+      <div class="task-subtasks">
+        <div *ngFor="let subtask of task.subtasks" class="subtask-item">
+          <input type="checkbox" [(ngModel)]="subtask.completed">
+          <span>{{ subtask.title }}</span>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Buttons -->
+    <div class="task-actions">
+      <button class="edit-btn" (click)="editTask()">
+        <img src="/assets/buttons/edit.svg" alt="Edit">Edit
+      </button>|
+      <button class="delete-btn" (click)="deleteTask()">
+        <img src="/assets/buttons/trash.svg" alt="Delete">Delete
+      </button>
+    </div>
+    
+  </div>  

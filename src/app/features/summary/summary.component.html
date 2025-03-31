@@ -1,0 +1,68 @@
+<div class="summary-container">
+  <div class="summaryHeader">
+    <h2>{{ greeting }}, <span>{{ userName }}</span></h2>
+  </div>
+
+  <div class="summary-grid grid grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- 🟦 Row 1: Urgent (3 cols) + ToDo (1 col) -->
+    <div class="col-span-2 lg:col-span-3 summary-card card--urgent" (click)="navigateToBoard()">
+      <div class="urgent-left">
+        <div class="counterIMG">
+          <h1 class="text-4xl font-bold">{{ urgentTasks }}</h1>
+          <img src="assets/icons/urgent.svg" alt="">
+        </div>
+        <p>Tasks urgent</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="urgent-right">
+        <p class="label">Upcoming Deadline</p>
+        <p class="date">{{ formattedDueDate }}</p>
+        <p class="countdown">{{ dueCountdown }}</p>
+      </div>
+      
+    </div>
+
+    <div class="col-span-2 lg:col-span-1 summary-card flex justify-center items-center bg-[#5A8CFF] hover:bg-[#FFFFFF]" (click)="navigateToBoard()">
+      <div class="counterIMG">
+        <h1 class="text-4xl font-bold">{{ todoCount }}</h1>
+        <img src="assets/icons/TaskTD.svg" alt="">
+      </div>
+      <p>Tasks To Do</p>
+    </div>
+
+    <!-- ⚪️ Row 2: Remaining 4 cards -->
+    <div class="summary-card bg-white hover:bg-[#4589FF] hover:text-white transition duration-200 cursor-pointer center" (click)="navigateToBoard()">
+      <div class="counterIMG">
+        <h1 class="text-4xl font-bold">{{ allTasksCount }}</h1>
+        <img src="assets/icons/TaskIB.svg" alt="">
+      </div>
+      <p> Tasks On The Board</p>
+    </div>
+
+    <div class="summary-card bg-white hover:bg-[#4589FF] hover:text-white transition duration-200 cursor-pointer center" (click)="navigateToBoard()">
+      <div class="counterIMG">
+        <h1 class="text-4xl font-bold">{{ inProgressCount }}</h1>
+        <img src="assets/icons/TaskIP.svg" alt="">
+      </div>
+      <p>Tasks In Progress</p>
+    </div>
+
+    <div class="summary-card bg-white hover:bg-[#4589FF] hover:text-white transition duration-200 cursor-pointer center" (click)="navigateToBoard()">
+      <div class="counterIMG">
+        <h1 class="text-4xl font-bold">{{ awaitFeedbackCount }}</h1>
+        <img src="assets/icons/AFeedback.svg" alt="">
+      </div>
+      <p>Tasks Await Feedback</p>
+    </div>
+
+    <div class="summary-card bg-white hover:bg-[#4589FF] hover:text-white transition duration-200 cursor-pointer center" (click)="navigateToBoard()">
+      <div class="counterIMG">
+        <h1 class="text-4xl font-bold">{{ doneCount }}</h1>
+        <img src="assets/icons/Done.svg" alt="">
+      </div>
+      <p>Tasks<br>Done</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,226 @@
+@use 'mixins' as *;
+@use 'variables' as *;
+
+.dashboard {
+  padding: 20px 0 0 8px;
+  height: 100%;
+}
+
+/* 🔍 Header mit Suche & Add Task */
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-right: 20px;
+}
+
+.task-search {
+  padding: 10px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* 🔵 Buttons (Add Task oben & Icons in Kategorien) */
+.add-task-btn {
+  @extend .btn-primary;
+  padding: 10px 20px;
+}
+
+.add-task-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url('/assets/buttons/plus_button_blue.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: rotate(90deg);
+  }
+}
+
+/* 🗂️ Task-Kategorien */
+.task-container {
+  min-width: 300px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+  position: static;
+  overflow-x: auto;
+  height: 100vh;
+}
+
+.task-category-wrapper {
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.task-category {
+  min-width: 12rem;
+  min-height: 100%;
+  position: static;
+  min-width: fit-content;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 8px;
+  user-select: none;
+  flex-shrink: 0;
+  flex: 1;
+}
+
+.task-placeholder {
+  width: 12rem;
+  flex-grow: 1;
+  min-height: 1px; 
+  visibility: hidden; 
+}
+
+.task-category.cdk-drop-list-dragging {
+  background-color: #f9f9f9; // leichter Hintergrund, nur während Drag
+  border: 1px dashed #ccc;
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: x-small;
+}
+
+/* 🧾 Task-Karten */
+.task-card {
+  width: 12rem;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  min-height: 5rem;
+  position: relative;
+  cursor: grab;
+
+  &.cdk-drag-preview {
+    rotate: (8deg) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 9999 !important;
+    pointer-events: none;
+    width: 200px;
+    height: auto;
+  }
+  
+
+  &.cdk-drag-placeholder {
+    opacity: 0.3;
+  }
+}
+
+/* 🏷 Kategorie-Label */
+.task-category-label {
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+/* 🔵 Titel */
+.task-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+/* 📝 Beschreibung */
+.task-description {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* 📌 Subtasks */
+.task-subtasks {
+  font-size: 12px;
+  margin-bottom: 10px;
+
+  .progress-bar-container {
+    width: 100%;
+    height: 6px;
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    margin-bottom: 4px;
+
+    .progress-bar {
+      height: 100%;
+      background-color: #2A6FF4;
+      border-radius: 3px;
+    }
+  }
+
+  .subtask-info {
+    font-size: 11px;
+    color: #555;
+  }
+}
+
+/* 👥 Initialen */
+.task-assignees {
+  display: flex;
+  gap: 0;
+  margin-top: 8px;
+  position: relative;
+
+  .user-initials {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #007bff; // fallback
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    margin-left: -6px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+/* 🚦 Priorität */
+.task-priority {
+  display: flex;
+  justify-content: flex-end;
+
+  img {
+    @include icon($icon-size-md);
+  }
+}
+
+/* 🔧 Utilities */
+.btn-primary {
+  background-color: #2A6FF4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.board-scrollable {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}

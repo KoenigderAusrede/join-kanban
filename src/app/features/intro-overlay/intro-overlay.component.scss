@@ -1,0 +1,29 @@
+.intro-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: #2a6ff4;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeOut 0.8s ease-out 0.8s forwards;
+  
+    .logo {
+      height: 64px;
+      animation: moveLogo 0.8s ease-in-out 0.8s forwards;
+    }
+  }
+  
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+  
+  @keyframes moveLogo {
+    to {
+      transform: translate(-42vw, -42vh) scale(0.6); // Position entspricht etwa oben links im Header
+    }
+  }
+  

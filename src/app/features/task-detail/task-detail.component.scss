@@ -1,0 +1,154 @@
+@use 'mixins' as *;
+@use 'variables' as *;
+
+.task-detail-overlay {
+  width: 100%;
+  max-width: 90vw;
+  background: $color-white;
+  box-shadow: $shadow-strong;
+  border-radius: $radius-lg $radius-lg 0 0;
+  padding: $spacing-xxl $spacing-xl; // 🔄 mehr Padding oben
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: $spacing-xl; // 🔄 mehr vertikaler Abstand
+
+  transform: translateY(100vh);
+  transition: transform 0.3s ease-in-out;
+
+  &.open {
+    transform: translateY(0);
+  }
+
+  @media screen and (min-width: 1024px) {
+    max-width: 60%;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Kategorie */
+.task-category {
+  display: inline-block;
+  padding: $spacing-xs $spacing-md;
+  font-size: $font-size-base;
+  font-weight: bold;
+  border-radius: $radius-sm;
+  color: white;
+  text-transform: uppercase;
+}
+
+/* Task Infos */
+.task-info {
+  font-size: $font-size-base;
+  color: $color-grey-dark; // 🔄 dunkler Text für Label
+
+  strong {
+    color: $color-grey-text;
+    display: inline-block;
+    min-width: 120px; // 🔄 Abstand zwischen Label und Wert
+  }
+}
+
+/* Assignees */
+.task-assignees {
+  display: flex;
+  gap: 0;
+  margin-top: 6px;
+  position: relative;
+  flex-wrap: wrap;
+
+  .user-initials {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    margin-left: -6px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+/* Subtasks */
+.task-subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  .subtask-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+  }
+}
+
+/* Buttons */
+.task-actions {
+  margin-top: auto;
+  align-self: flex-end;
+  display: flex;
+  gap: $spacing-md;
+
+  .delete-btn,
+  .edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+/* Close-Button */
+.close-btn {
+  position: absolute;
+  top: $spacing-md;
+  right: $spacing-md;
+  width: 24px;
+  height: 24px;
+  background: url('/assets/buttons/blueX.svg') no-repeat center center;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-image: url('/assets/buttons/blueXhover.svg');
+  }
+}

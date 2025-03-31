@@ -1,0 +1,30 @@
+<header class="header">
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <!-- Join Logo -->
+    <img src="assets/logo/joinLogoWhite.svg" alt="Join Logo" class="logo">
+
+    <!-- App Title -->
+    <div class="hidden lg:inline">
+      Kanban Project Management Tool
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <!-- Help Icon -->
+    <img src="assets/icons/help.svg" class="help-icon" (click)="goToHelp()">
+
+    <!-- User Icon -->
+    <div class="user-info" (click)="toggleMenu()">
+      <div class="user-icon">{{ userName }}</div>
+
+      <!-- Dropdown-Menü -->
+      <div class="dropdown" *ngIf="menuOpen">
+        <ul>
+          <li><a routerLink="/legal-notice">Legal Notice</a></li>
+          <li><a routerLink="/privacy-policy">Privacy Policy</a></li>
+          <li (click)="logout()">Log out</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
