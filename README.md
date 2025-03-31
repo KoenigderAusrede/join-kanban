@@ -56,8 +56,4 @@ Thanks to the teaching team and fellow students for the inspiration & support!
 Questions, feedback or ideas?
 📧 felix@dieblasers.de
 
-yaml
-Kopieren
-Bearbeiten
-
 ---
