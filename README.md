@@ -1,27 +1,63 @@
-# JoinKanban
+# 🧩 Join – Kanban Project Management (Demo)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
+Welcome to **Join** – a kanban-based project management tool, designed and built as part of a web development bootcamp at the [Developer Akademie](https://www.developerakademie.com).
 
-## Development server
+Join helps you visualize, organize and manage tasks in a beautiful, intuitive interface – all based on the proven Kanban method.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+> ⚠️ This app is a **demo project** and not intended for production use. Use it for learning, showcasing or personal testing purposes.
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## ✨ Features
 
-## Build
+- 📝 Create, edit and delete tasks
+- 👥 Assign tasks to contacts
+- 📌 Drag & drop across columns: To Do, In Progress, Await Feedback, Done
+- ✅ Subtasks with progress bar
+- 🔎 Real-time task filtering
+- 🧑‍💻 Firebase integration (Auth + Firestore)
+- 📱 Responsive design for desktop and mobile
+- 🔐 Guest login without account
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🚀 Technologies
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Angular**
+- **Firebase (Auth + Firestore)**
+- **Tailwind CSS** (partial use)
+- **RxJS** and reactive patterns
+- **CDK Drag & Drop**
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🔧 Project Setup (Local)
 
-## Further help
+```bash
+git clone https://github.com/KoenigderAusrede/join-kanban.git
+cd join-kanban
+npm install
+ng serve
+Then open: http://localhost:4200
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+🔑 You’ll need to connect your own Firebase project or use the deployed version below.
+
+🌍 Live Demo
+Check out the app here:
+👉 https://dieblasers.de/felix/Projekte/JoinKanban/
+
+Login as Guest or create a test account.
+
+🤝 Credits
+Created by Felix as part of the Developer Akademie Bootcamp.
+Thanks to the teaching team and fellow students for the inspiration & support!
+
+📬 Contact
+Questions, feedback or ideas?
+📧 felix@dieblasers.de
+
+yaml
+Kopieren
+Bearbeiten
+
+---
