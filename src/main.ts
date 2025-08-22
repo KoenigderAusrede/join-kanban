@@ -15,5 +15,3 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
   ]
 })
-  .then(() => console.log("✅ Firebase Auth erfolgreich registriert!"))
-  .catch(err => console.error("❌ Fehler beim Bootstrapping!", err));

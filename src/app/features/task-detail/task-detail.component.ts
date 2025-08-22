@@ -30,7 +30,6 @@ export class TaskDetailComponent {
     const confirmDelete = confirm('Bist du sicher, dass du diesen Task löschen möchtest?');
     if (confirmDelete) {
       this.firestoreService.deleteTask(this.task.id).then(() => {
-        console.log('🗑️ Task gelöscht');
         this.closeDetail(); // Overlay schließen
       }).catch(err => {
         console.error('Fehler beim Löschen des Tasks:', err);
@@ -39,7 +38,6 @@ export class TaskDetailComponent {
   }
 
   editTask() {
-    console.log('📤 editTask() triggered');
     this.edit.emit(this.task);
   }
 

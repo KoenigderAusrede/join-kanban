@@ -26,7 +26,9 @@ export const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
-      { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] }
+      { path: 'signup', component: SignupComponent, canActivate: [LoginGuard] },
+      { path: 'privacy-policy', component: PrivacyPolicyComponent },
+      { path: 'legal-notice', component: LegalNoticeComponent },
     ]
   },
 
@@ -40,8 +42,6 @@ export const routes: Routes = [
       { path: 'contacts', component: ContactsComponent },
       { path: 'summary', component: SummaryComponent },
       { path: 'add-task', component: AddTaskComponent },
-      { path: 'privacy-policy', component: PrivacyPolicyComponent },
-      { path: 'legal-notice', component: LegalNoticeComponent },
       { path: 'responsive-demo', component: ResponsiveDemoComponent },
       { path: 'help', component: HelpComponent },
     ]

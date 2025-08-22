@@ -44,9 +44,7 @@ export class LoginComponent {
     try {
       await setPersistence(this.auth, browserLocalPersistence);
       const userCredential = await signInWithEmailAndPassword(this.auth, this.email, this.password);
-      console.log('✅ Login erfolgreich:', userCredential.user);
     
-      // 👉 Warten, bis AuthService sicher erkennt, dass eingeloggt ist
       this.authService.isLoggedIn$().pipe(
         filter(loggedIn => loggedIn), // nur wenn "true"
         take(1) // nur 1x feuern
@@ -57,7 +55,6 @@ export class LoginComponent {
       
     } catch (error) {
       this.loadingService.setLoading(false);
-      console.error('❌ Fehler beim Login:', (error as any).message);
       alert("Login fehlgeschlagen: " + (error as any).message);
     }
   }   
@@ -68,4 +65,5 @@ export class LoginComponent {
       this.router.navigate(['/summary']);
     }, 500);
   }
+  
 }

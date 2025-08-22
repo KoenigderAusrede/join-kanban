@@ -28,7 +28,6 @@ export class SignupComponent {
       // 1. Account bei Firebase Auth anlegen
       const userCredential = await createUserWithEmailAndPassword(this.auth, this.email, this.password);
       const user: User = userCredential.user;
-      console.log('✅ Auth erstellt:', user);
 
       // 2. Firestore-Datensatz für den User anlegen
       const userDocRef = doc(this.firestore, 'users', user.uid);
@@ -39,7 +38,6 @@ export class SignupComponent {
         role: 'user' // später für Admin etc.
       });
 
-      console.log('✅ Firestore-Eintrag angelegt');
       this.router.navigate(['/summary']);
     } catch (error) {
       console.error('❌ Fehler beim Signup:', (error as any).message);

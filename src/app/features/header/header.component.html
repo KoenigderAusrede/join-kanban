@@ -11,7 +11,7 @@
 
   <div style="display: flex; align-items: center; gap: 10px;">
     <!-- Help Icon -->
-    <img src="assets/icons/help.svg" class="help-icon" (click)="goToHelp()">
+    <img src="assets/icons/help.svg" class="help-icon" [routerLink]="'/help'">
 
     <!-- User Icon -->
     <div class="user-info" (click)="toggleMenu()">
@@ -20,9 +20,32 @@
       <!-- Dropdown-Menü -->
       <div class="dropdown" *ngIf="menuOpen">
         <ul>
-          <li><a routerLink="/legal-notice">Legal Notice</a></li>
-          <li><a routerLink="/privacy-policy">Privacy Policy</a></li>
-          <li (click)="logout()">Log out</li>
+          <li>
+            <button 
+              [routerLink]="'/legal-notice'" 
+              class="text-sm font-normal text-gray-700 hover:text-blue-600 w-full text-left px-3 py-1 whitespace-nowrap"
+            >
+              Legal Notice
+            </button>
+          </li>
+          
+          <li>
+            <button 
+              [routerLink]="'/privacy-policy'" 
+              class="text-sm font-normal text-gray-700 hover:text-blue-600 w-full text-left px-3 py-1 whitespace-nowrap"
+            >
+              Privacy Policy
+            </button>
+          </li>
+          
+          <li>
+            <button 
+              (click)="logout()" 
+              class="text-sm font-normal text-gray-700 hover:text-red-600 w-full text-left px-3 py-1 whitespace-nowrap"
+            >
+              Log out
+            </button>
+          </li>          
         </ul>
       </div>
     </div>

@@ -101,7 +101,6 @@ onMouseUp() {
     // 🔥 Firestore Update
     try {
       await this.firestoreService.updateTask(movedTask);
-      console.log(`✅ Task "${movedTask.title}" verschoben → ${targetCategory}`);
     } catch (err) {
       console.error('❌ Fehler beim Task-Update:', err);
     }

@@ -1,7 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { UserService } from '../../core/services/user.service';
   standalone: true,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [NgIf] // und ggf. RouterLink etc.
+  imports: [NgIf, RouterModule]
 })
 
 export class HeaderComponent {
@@ -17,7 +17,7 @@ export class HeaderComponent {
   private router = inject(Router);
 
   userName: string | null = null;
-  menuOpen: boolean = false; // 👈 Toggle für Dropdown
+  menuOpen: boolean = false;
 
   constructor(private userService: UserService) {
     onAuthStateChanged(this.auth, (user: User | null) => {
@@ -54,7 +54,7 @@ export class HeaderComponent {
   }
 
   getInitials(name: string): string {
-    if (!name) return '?';
+    if (!name) return 'G';
   
     const parts = name.trim().split(' ');
   

@@ -94,7 +94,6 @@ export class ContactsComponent {
 editableContact: Contact = { firstName: '', lastName: '', email: '', phone: '', color : '' };
 
 openEditOverlay() {
-  console.log('Opening edit overlay...');
   if (this.selectedContact) {
     this.editableContact = { ...this.selectedContact }; // Kopie des Kontakts
     this.isEditOverlayOpen = true;
